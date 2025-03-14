@@ -1,0 +1,67 @@
+{% extends "public_base.html" %}
+
+{% block content %}
+
+<div class="row"> 
+    <!-- Card for the Map -->
+    <div class="col-md-8 mb-3 mt-4">
+    <div class="card shadow-lg"> <!-- Tambahkan shadow untuk efek kedalaman -->
+        <div class="card-header bg-info text-white"> <!-- Gradient background -->
+            <h5 class="card-title mb-0">
+                <i class="fas fa-map-marked-alt me-2"></i> <!-- Ikon peta -->
+                Map of Kliniks
+            </h5>
+        </div>
+        <div class="card-body p-0"> <!-- Padding 0 untuk map agar full di dalam card -->
+            <div id="map" style="height: 500px; border-radius: 0 0 8px 8px;"></div> <!-- Border radius hanya di bagian bawah -->
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-end"> <!-- Footer untuk tombol -->
+            <button onclick="toggleMapView()" class="btn btn-primary btn-lg"> <!-- Tombol besar -->
+                <i class="fas fa-sync-alt me-2"></i> <!-- Ikon refresh -->
+                Ganti Mode Peta
+            </button>
+        </div>
+    </div>
+</div>
+
+    <!-- Card for Clinic Summary List -->
+    <div class="col-md-4 mb-3 mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Summary of Kliniks by Municipality</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for municipality, counts in summary.items %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                                <strong>{{ municipality }}</strong>
+                            </div>
+                            <div>
+                                <span class="badge bg-primary rounded-pill" title="Klinika Privadu">{{ counts.Privadu }} <i class="fas fa-clinic-medical"></i></span>
+                                <span class="badge bg-success rounded-pill">{{ counts.Publiku }} <i class="fas fa-hospital"></i></span>
+                                <span class="badge bg-info rounded-pill">{{ counts.Total }} <i class="fas fa-stethoscope"></i></span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<!-- Custom JavaScript -->
+<script type="text/javascript">{% include 'js/generalmaps.js' %}</script>
+
+
+{% endblock %}

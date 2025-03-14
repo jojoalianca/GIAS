@@ -1,0 +1,42 @@
+/* Mengatur gaya gambar agar berada di tengah dan tampil keren */
+.phone-image {
+    width: 200px; /* Ukuran gambar */
+    height: 200px; /* Menjaga agar gambar tetap persegi */
+    object-fit: cover; /* Agar gambar tidak terdistorsi dan mencocokkan ukuran yang tepat */
+    border-radius: 50%; /* Membuat gambar berbentuk bulat */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Memberikan efek bayangan halus */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efek transisi saat hover */
+    margin-bottom: 20px; /* Memberikan jarak di bawah gambar */
+}
+
+/* Efek saat hover gambar */
+.phone-image:hover {
+    transform: scale(1.05); /* Memperbesar sedikit saat hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Bayangan lebih besar saat hover */
+}
+.marquee-text {
+        position: absolute;
+        top: 10px; /* Adjust this as needed */
+        left: 0;
+        width: 100%;
+        z-index: 10; /* Ensure text is on top */
+    }
+
+.scroll-text {
+        font-size: 40px;
+        font-weight: bold;
+        color: Black; /* Or any color you prefer */
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+        animation: scroll-left 10s linear infinite;
+    }
+
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }

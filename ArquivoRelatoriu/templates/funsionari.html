@@ -1,0 +1,145 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section>
+    <div class="container-fluid">
+        <!-- Page Header-->
+        <header>
+            <ol class="breadcrumb mb-1 mt-1">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Varanda</a></li>
+                <li class="breadcrumb-item"><a href="">Lista Departamento</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+            </ol>
+        </header>
+        {% if messages %}
+                        {% for message in messages %} 
+                            <div id="divmessage" class="alert alert-{{ message.tags }} alert-dismissable">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                              {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}   
+
+        <div class="row">
+            {% if page == "list" %}
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-end text-center">
+                        <div class="text-center border">
+                            <a href="{% url 'adisiona-funsionariu'%}" class="btn btn-sm btn-info" title="Add Data">Add <i class="fa fa-plus-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="table table-hover table-striped w-100">
+                                <thead>
+                                    <tr>
+                                        <th> No</th>
+                                        <th> Img </th>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Sexo</th>
+                                        <th>Departamento</th>
+                                        <th>Data Entrada</th>
+                                        <th>Status</th>
+                                        <th>Status Profisaun</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for funsionario in funsionarios %}
+                                    <tr>
+                                        <td scope="row"> {{forloop.counter}} </td>
+                                         <td class="text-center">{% if funsionario.image %}<a href="{{funsionario.image.url}}" target="_blank"><img src="{{funsionario.image.url}}" width="50px" height="50px"></a>{%else%}{%endif%}</td>
+                                        <td>{{ funsionario.nome }}</td>
+                                        <td>{{ funsionario.cargo }}</td>
+                                        <td>{{ funsionario.get_sexu_display }}</td>
+                                        <td>{{ funsionario.departamentu }}</td>
+                                        <td>{{ funsionario.data_entrada }}</td>
+                                        <td>{{ funsionario.get_status_display }}</td>
+                                        <td>{{ funsionario.get_status_profisaun_display }}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="flex-fill">
+                                                    <a href="{% url 'funsionario_update' funsionario.id %}" class="btn btn-sm btn-primary" title="Update"><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                                <div class="flex-fill">
+                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{ funsionario.id }}" style="text-decoration: none"><i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal Delete -->
+                                    <div class="modal fade" id="delete-{{ funsionario.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteLabel">Delete Funsionario</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Ita Boot fiar atu hamos funsionario ne'e: {{ funsionario.nome }}?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <a href="{% url 'delete_Funsionariu' funsionario.id %}" class="btn btn-danger">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if page == "form" %}
+            <div class="container-fluid pt-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2><p>Formulariu Adisiona Funsionariu</p></h2>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% crispy form %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example').removeAttr('width').DataTable();
+    });
+    
+</script>
+<script type="text/javascript">
+    function myFunction() {
+        var file = document.getElementById("id_image").files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('output').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
+{% endblock %}

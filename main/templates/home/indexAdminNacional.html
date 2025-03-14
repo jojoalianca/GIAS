@@ -1,0 +1,81 @@
+{% load static %}
+    <!-- Header Marquee -->
+    <div class="text-center">
+        <div class="marquee-text scroll-text">BEMVINDU!</div>
+    </div>
+    <div class="row">
+    <div class=" card col-md-6">
+        <div class="text-center">
+        <img src="{% static 'main/images/MS.PNG' %}" alt="Logo" class="img-fluid mb-3" style="max-width: 400px;">
+        <h4>BEMVINDU MAI...</h4>
+        <h2>MINISTERIU DE SAÚDE</H2>
+    </div>
+</div>
+ <div class=" card col-md-6">
+        <div class="text-center">
+        <img src="{% static 'main/images/gias.PNG' %}" alt="Logo" class="img-fluid mb-3" style="max-width: 200px;">
+        <h1>SISTEMA ARQUIVAMENTU DADUS GABINETE INPESAUN I AUDITORIA DE SAÚDE (GIAS-MS)</h1>
+    </div>
+</div>
+</div>
+<hr>
+    <!-- Jumlah Berdasarkan Jenis Kelamin -->
+    <div class="category-header">Total Funsionariu Tuir Seksu no Status Profisaun</div>
+    <div class="row">
+        {% for item in total_sexu %}
+        <div class="col-md-3">
+            <div class="category-item">
+                <i class="fas fa-genderless"></i>
+                <div class="text">
+                    <div>{{ item.sexu }}</div>
+                    <div class="count">{{ item.count }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+     <!-- Jumlah Berdasarkan Status Profisaun -->
+        {% for item in total_status_profisaun %}
+        <div class="col-md-3">
+            <div class="category-item">
+                <i class="fas fa-clipboard-list"></i>
+                <div class="text">
+                    <div>{{ item.status_profisaun }}</div>
+                    <div class="count">{{ item.count }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Jumlah Berdasarkan Departamentu -->
+    <div class="category-header">Total Funsionariu Tuir Departamentu</div>
+    <div class="row">
+        {% for item in total_departamentu %}
+        <div class="col-md-3">
+            <div class="category-item">
+                <i class="fas fa-sitemap"></i>
+                <div class="text">
+                    <div>{{ item.departamentu__name }}</div>
+                    <div class="count">{{ item.count }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Jumlah Berdasarkan Diresaun -->
+    <div class="category-header">Total Funsionariu Tuir Diresaun</div>
+    <div class="row">
+        {% for item in total_diresaun %}
+        <div class="col-md-3">
+            <div class="category-item">
+                <i class="fas fa-building"></i>
+                <div class="text">
+                    <div>{{ item.diresaun__name }}</div>
+                    <div class="count">{{ item.count }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+

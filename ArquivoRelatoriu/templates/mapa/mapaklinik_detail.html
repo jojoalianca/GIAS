@@ -1,0 +1,132 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div id="divmessage" class="alert alert-{{ message.tags }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% if page == "detail" %}
+    <div class="container mt-4">
+        <!-- Card untuk Detail Klinik dan Peta -->
+        <div class="card shadow-lg">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h4>{{ klinika.naran_klinik }} - {{ klinika.municipality }}</h4>
+                <!-- Tombol untuk Tampilkan/Sembunyikan Peta dan Adisiona Cordinate -->
+                <div>
+                    <button id="toggleMapButton" class="btn btn-outline-light btn-sm mr-2">
+                        <i class="fas fa-map"></i> Tampilkan Peta
+                    </button>
+                     <a href="{% url 'add_cliente_raipoint' klinika.id %}" class="btn btn-sm btn-outline-dark" title="Add Data">Add Kordinate <i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Kolom untuk Detail Klinik -->
+                    <div class="col-md-6">
+                        <p><strong>Tipo Klinik:</strong> {{ klinika.tipo_klinik }}</p>
+                        <p><strong>Telefone:</strong> {{ klinika.telefone }}</p>
+                        <p><strong>Email:</strong> {{ klinika.email }}</p>
+                    </div>
+                    <!-- Kolom untuk Peta (Awalnya Disembunyikan) -->
+                    <div class="col-md-12" id="mapContainer" style="display: none;">
+                        <div id="map" style="height: 500px; width: 100%; border-radius: 10px;"></div>
+                    </div>
+                </div>
+
+                <!-- Tabel untuk Menampilkan Daftar Koordinat -->
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center mt-3">
+                    <h5>KORDINATE KLINIKA</h5>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Aksaun</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for xx in cordinate %}
+                                <tr>
+                                    <td>{{ xx.latitude }}</td>
+                                    <td>{{ xx.longitude }}</td>
+                                    <td>
+                                        <a href="{% url 'update_cliente_raipoint' xx.id %}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Update
+                                        </a>
+                                        <a href="" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center">La iha kordinate disponivel.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+             
+{%endif%}
+                <!-- Form untuk Adisiona Cordinate (Awalnya Disembunyikan) -->
+                {% if page == "form" %}
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between text-center">
+                                    <h5>Adisiona Cordinate Mapa</h5>
+                                </div>
+                                <div class="card-body">
+                                    {% csrf_token %}
+                                    {% crispy form %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Panggil file JavaScript -->
+    <script src="{% static 'js/map.js' %}"></script>
+     <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <script type="text/javascript">
+        {% include 'js/mapAdmin.js' %}
+
+        // Fungsi untuk menampilkan/sembunyikan peta
+        document.getElementById('toggleMapButton').addEventListener('click', function() {
+            var mapContainer = document.getElementById('mapContainer');
+            if (mapContainer.style.display === 'none') {
+                mapContainer.style.display = 'block';
+                this.innerHTML = '<i class="fas fa-map"></i> Sembunyikan Peta';
+            } else {
+                mapContainer.style.display = 'none';
+                this.innerHTML = '<i class="fas fa-map"></i> Tampilkan Peta';
+            }
+        });
+
+        //load Imagen
+            function myFunction() {
+              var image = document.getElementById("output");
+              image.src = URL.createObjectURL(event.target.files[0]);
+            }
+
+    </script>
+{% endblock %}

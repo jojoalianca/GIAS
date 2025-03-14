@@ -1,0 +1,88 @@
+
+    /* Header Marquee */
+    .header-marquee {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        padding: 10px;
+        text-align: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: #f8f9fa;
+        padding: 40px 0;
+    }
+
+    .hero-section h1, .hero-section h2, .hero-section h4 {
+        color: #333;
+    }
+
+    .hero-section img {
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Statistics Section */
+    .statistics-section {
+        padding: 40px 0;
+    }
+
+    .category-header {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .category-item {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .category-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-item i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .category-item .text {
+        font-size: 18px;
+        color: #555;
+    }
+
+    .category-item .count {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-section h1 {
+            font-size: 24px;
+        }
+
+        .hero-section h2 {
+            font-size: 20px;
+        }
+
+        .category-header {
+            font-size: 20px;
+        }
+
+        .category-item {
+            margin-bottom: 20px;
+        }
+    }

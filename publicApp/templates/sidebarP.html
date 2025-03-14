@@ -1,0 +1,33 @@
+{% load static %}
+<header class="site-header">
+    <nav class="navbar navbar-expand-md bg-info  text-black fixed-top ">
+        <a class="navbar-brand text-white" href="#">
+        <img src="{% static 'main/images/logo.PNG' %}" alt="Logo" style="width:30px;">Gabinete Inspesaun I Auditori Sa&uacutede (GIAS)
+        </a>
+        <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon bg-dark"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'index_public' %}">HOME <i class="fa fa-home"></i></a></li>
+        
+        <li class="nav-item"><a class="nav-link" href="{% url 'mapa_klinik'%}"><i class="fa fa-map"></i> MAPA</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">RELATORIO </a>
+            <div class="dropdown-menu" aria-labelledby="profile">
+                <a class="dropdown-item" href="" ><i class="fa fa-list"></i> Tabular</a>
+                <a class="dropdown-item" href="{% url 'relatoriu_chart' %}" ><i class="fa fa-bar-chart"></i> Grafiku</a>                
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+            <div class="dropdown-menu" aria-labelledby="profile">
+                <a class="dropdown-item" href="{% url 'login' %}"><i class="fa fa-sign-out"></i> Login</a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+    </nav>
+</header>
+<hr/>

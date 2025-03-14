@@ -1,0 +1,176 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section>
+    <div class="container-fluid">
+        <!-- Page Header-->
+        <header>
+            <ol class="breadcrumb mb-1 mt-1">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Varanda</a></li>
+                <li class="breadcrumb-item"><a href="">Lista Karta Entrada</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+            </ol>
+        </header>
+        {% if messages %}
+            {% for message in messages %}
+                <div id="divmessage" class="alert alert-{{ message.tags }} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            {% if page == "list" %}
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-end text-center">
+                        <div class="text-center border">
+                            <a href="{% url 'Entrada_create' %}" class="btn btn-sm btn-info" title="Add Data">Add <i class="fa fa-plus-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="table table-hover table-striped w-100">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No. Karta</th>
+                                        <th>Data Entrada</th>
+                                        <th>Data Dok</th>
+                                        <th>No. Referensia</th>
+                                        <th>Assunto</th>
+                                        <th>Hato'o ba</th>
+                                        <th>Husi</th>
+                                        <th>Dokumen</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in entrada %}
+                                    <tr>
+                                        <td scope="row">{{ forloop.counter }}</td>
+                                        <td>{{ data.no_karta }}</td>
+                                        <td>{{ data.data_entrada }}</td>
+                                        <td>{{ data.data_dok }}</td>
+                                        <td>{{ data.no_referensia }}</td>
+                                        <td>{{ data.assunto }}</td>
+                                        <td>{{ data.hato_o_ba }}</td>
+                                        <td>{{ data.husi }}</td>
+                                        <td>
+                                            {% if data.dokumen %}
+                                                <a href="{{ data.dokumen.url }}" target="_blank">
+                                                    <i class="fa fa-file-pdf-o" style="color: #e74c3c; font-size: 24px;" title="Download PDF"></i> Download PDF
+                                                </a>
+                                            {% else %}
+                                                <span class="badge badge-danger">No document uploaded</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if data.is_read %}
+                                                <span class="badge badge-success">Despaxo Ona</span>
+                                            {% else %}
+                                                <span class="badge badge-warning">Hein Despacho</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <!-- Tombol untuk detail hanya jika sudah dibaca -->
+                                                {% if data.is_read %}
+                                                <div class="flex-fill">
+                                                    <a href="{% url 'detail_karta_entrada' data.id %}" class="btn btn-sm btn-info" title="Detallu">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </div>
+                                                {% else %}
+                                                <div class="flex-fill">
+                                                    <span class="badge badge-dark"> <i class="fa fa-eye-slash"></i></span>
+                                                </div>
+                                                {% endif %}
+
+                                                <div class="flex-fill">
+                                                    <a href="{% url 'update_karta_entrada' data.id %}" class="btn btn-sm btn-primary" title="Update">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="flex-fill">
+                                                    {% if not data.is_read %}
+                                                        <!-- Tombol "Mark as Read" hanya jika belum dibaca -->
+                                                        <a href="{% url 'mark_as_read' data.id %}" class="btn btn-sm btn-secondary" title="Mark as despaxo ona">
+                                                            <i class="fa fa-check"></i> 
+                                                        </a>
+                                                    {% endif %}
+                                                </div>
+
+                                                <div class="flex-fill">
+                                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{ data.id }}" style="text-decoration: none">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal Delete -->
+                                    <div class="modal fade" id="delete-{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteLabel">Delete Karta Entrada</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Ita Boot fiar atu hamos Karta Entrada ne'e: {{ data.no_karta }}?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                                    <a href="{% url 'delete_arquivu_relatoriu' data.id %}" class="btn btn-danger">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if page == "form" %}
+            <div class="container-fluid pt-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2><p>Formulariu Adisiona Karta Entrada</p></h2>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% crispy form %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example').removeAttr('width').DataTable();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+ /* Style for the transparent popup */
+    .transparent-popup .leaflet-popup-content-wrapper {
+        background: rgba(255, 255, 255, 0.8); /* Transparent background */
+        border-radius: 5px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .transparent-popup .leaflet-popup-tip {
+        background: rgba(255, 255, 255, 0.8); /* Transparent tip */
+    }
+
+    /* Custom styles for the list group */
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        margin-left: 5px;
+    }
+
+    .badge.bg-primary {
+        background-color: #007bff !important;
+    }
+
+    .badge.bg-success {
+        background-color: #28a745 !important;
+    }
+
+    .badge.bg-info {
+        background-color: #17a2b8 !important;
+    }
+
+    .fas {
+        margin-right: 5px;
+    }
+ /* Gradient background untuk card header */
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+    }
+
+    /* Efek shadow untuk card */
+    .shadow-lg {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Style untuk tombol */
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Efek hover pada tombol */
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Border radius untuk map */
+    #map {
+        border-radius: 0 0 8px 8px;
+    }
+
+    /* Style untuk card footer */
+    .card-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }

@@ -1,0 +1,29 @@
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-header {
+        border-radius: 15px 15px 0 0;
+    }
+    .btn-light {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
+    .btn-light:hover {
+        background-color: #e9ecef;
+    }
+    .leaflet-popup-content {
+        font-size: 14px;
+    }
+    .leaflet-popup-content img {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
