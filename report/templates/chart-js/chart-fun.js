@@ -5,7 +5,7 @@
     // Siapkan data untuk ApexCharts
     var labels = data.map(item => item.departamento);
     var totalMane = data.map(item => item.total_sexo_Mane_Dep);
-    var totalFeto = data.map(item => item.total_sexo_Feto_Dep);
+    var totalFeto = data.map(item => item.total_sexu_Feto_Dep);
     var totalFun = data.map(item => item.total_fun);
 
     // Konfigurasi chart ApexCharts
