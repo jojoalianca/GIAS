@@ -252,7 +252,7 @@ def MapaKlinika_list(request):
 	"page":"list",
 	'KlinikaList':KlinikaList,	
 	}
-	return render(request, 'mapa/mapaklinik_detail.html',context)
+	return render(request, 'mapa/klinika.html',context)
 
 
 @login_required()
