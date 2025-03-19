@@ -245,16 +245,15 @@ def detail_karta_entrada(request, pk):
 @login_required()
 @allowed_users(allowed_roles=['admin'])
 def MapaKlinika_list(request):
-    group = request.user.groups.all()[0].name
-    KlinikaList = MapaKlinik.objects.all()
-    context = {
-	'group':group,
-	"page":"list",
-	'KlinikaList':KlinikaList,	
+	group = request.user.groups.all()[0].name
+	KlinikaList = MapaKlinik.objects.all()
+	context = {
+		'group':group,
+		"page":"list",
+		'KlinikaList':KlinikaList,	
 	}
 	return render(request, 'mapa/klinika.html',context)
-
-
+	
 @login_required()
 @allowed_users(allowed_roles=['admin'])
 def MapaKlinikDetailView(request, pk):
