@@ -30,8 +30,8 @@ urlpatterns = [
 	path('Klinika/MapaKlinika/Lista ', MapaKlinika_list, name='MapaKlinika_list'),
 	path('Add/klinik/', add_klinik, name='add_klinik'),
 	path('mapaklinik/<int:pk>/', MapaKlinikDetailView, name='mapaklinik_detail'),
-    path('mapaklinik/<int:klinika_id>/add_cliente_raipoint/', add_cliente_raipoint, name='add_cliente_raipoint'),
-    path('update-cliente-raipoint/<int:point_id>/', update_cliente_raipoint, name='update_cliente_raipoint'),
+    	path('mapaklinik/<int:klinika_id>/add_cliente_raipoint/', add_cliente_raipoint, name='add_cliente_raipoint'),
+    	path('update-cliente-raipoint/<int:point_id>/', update_cliente_raipoint, name='update_cliente_raipoint'),
 
 
 	]
