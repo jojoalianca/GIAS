@@ -3,8 +3,8 @@ from .models import *
 
 @admin.register(Funsionario)
 class FunsionariAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'numero_identificacao', 'cargo', 'sexu', 'status']
-    search_fields = ['nome', 'numero_identificacao', 'cargo']
+    list_display = ['nome', 'cargo', 'sexu', 'status']
+    search_fields = ['nome', 'cargo']
     list_filter = ['status', 'status_profisaun']
 
 @admin.register(KartaEntrada)
@@ -38,3 +38,7 @@ class MapaKlinikAdmin(admin.ModelAdmin):
 @admin.register(ClienteRaiPoint)
 class ClienteRaiPointAdmin(admin.ModelAdmin):
     list_display = ['klinika']
+
+@admin.register(PDFUpload)
+class PDFUploadAdmin(admin.ModelAdmin):
+    list_display = ['title']

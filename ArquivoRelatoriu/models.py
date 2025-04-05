@@ -3,12 +3,20 @@ from custom.models import *
 # from django.contrib.gis.db import models as gis_models
 
 # from django.contrib.gis.db import models
+class PDFUpload(models.Model):
+    title = models.CharField(max_length=255)
+    file = models.FileField(upload_to='pdfs/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 class Diresaun(models.Model):
     name = models.CharField(max_length=100, unique=True)
     
     def __str__(self):
-        return self.name 
+        return self.name
+
 
 class Departamentu(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -34,7 +42,6 @@ class ArquivuRelatoriu(models.Model):
 
 class Funsionario(models.Model):
     nome = models.CharField(max_length=255)
-    numero_identificacao = models.CharField(max_length=50, unique=True, null=True, blank=True)
     sexu = models.CharField( max_length=50, 
         choices=[
             ('Mane', 'Mane'),
@@ -43,11 +50,41 @@ class Funsionario(models.Model):
         default='Mane'
     )
     cargo = models.CharField(max_length=100)
+    regime = models.CharField( max_length=50, 
+        choices=[
+            ('Geral', 'Geral'),
+            ('Espesial', 'Espesial'),
+        ], 
+        default='Geral'
+    )
+    grau = models.CharField( max_length=50, 
+        choices=[
+            ('A', 'A'),
+            ('B', 'B'),
+            ('C', 'C'),
+            ('D', 'D'),
+            ('E', 'E'),
+            ('F', 'F'),
+        ], 
+        default='A'
+    )
+    level = models.CharField( max_length=50, 
+        choices=[
+            ('I', 'I'),
+            ('II', 'II'),
+            ('III', 'III'),
+            ('IV', 'IV'),
+            ('V', 'V'),
+            ('VI', 'VI'),
+        ], 
+        default='I'
+    )
+    background = models.CharField(max_length=100, null=True,blank=True)
+    scalaun = models.CharField(max_length=100, null=True,blank=True)
     diresaun = models.ForeignKey(Diresaun, on_delete=models.CASCADE,null=True, blank=True)
     departamentu = models.ForeignKey(Departamentu, on_delete=models.CASCADE,null=True, blank=True)
     endereco = models.CharField(max_length=255, blank=True, null=True)
     telefone = models.CharField(max_length=20, blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
     data_entrada = models.DateField()
     image = models.ImageField(upload_to='Funsionariu/', null=True, blank=True)
     status = models.CharField(max_length=50, choices=[('Active', 'Active'),('Leave', 'Leave'),

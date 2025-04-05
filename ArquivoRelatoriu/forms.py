@@ -3,9 +3,21 @@ from django.core.validators import FileExtensionValidator
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Button, HTML
 from django.contrib.auth.models import Group,User
+from .models import PDFUpload
 from .models import *
 # from custom.models import *
 
+class PDFUploadForm(forms.ModelForm):
+    class Meta:
+        model = PDFUpload
+        fields = ['title', 'file']
+
+    def clean_file(self):
+        file = self.cleaned_data.get('file', False)
+        if file:
+            if not file.name.endswith('.pdf'):
+                raise forms.ValidationError("Hanya file PDF yang diperbolehkan.")
+        return file
 class DateInput(forms.DateInput):
     input_type = 'date'
 
@@ -14,8 +26,8 @@ class FunsionarioForm(forms.ModelForm):
     class Meta:
         model = Funsionario
         fields = [
-            'nome', 'numero_identificacao', 'sexu', 'cargo', 'diresaun', 
-            'departamentu', 'endereco', 'telefone', 'email', 'data_entrada', 
+            'nome', 'sexu', 'cargo','regime','grau','level','background','scalaun','diresaun', 
+            'departamentu', 'endereco', 'telefone', 'data_entrada', 
             'image', 'status', 'status_profisaun'
         ]
         
@@ -25,20 +37,26 @@ class FunsionarioForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.layout = Layout(
             Row(
-                Column('nome', css_class='form-group col-md-6 mb-0'),
-                Column('numero_identificacao', css_class='form-group col-md-3 mb-0'),
-                Column('sexu', css_class='form-group col-md-3 mb-0'),
+                Column('nome', css_class='form-group col-md-5 mb-0'),
+                Column('sexu', css_class='form-group col-md-2 mb-0'),
+                Column('cargo', css_class='form-group col-md-5 mb-0'),
             ),
             Row(
-                Column('cargo', css_class='form-group col-md-4 mb-0'),
-                Column('diresaun', css_class='form-group col-md-4 mb-0'),
-                Column('departamentu', css_class='form-group col-md-4 mb-0'),
+                
+                Column('regime', css_class='form-group col-md-1 mb-0'),
+                Column('grau', css_class='form-group col-md-1 mb-0'),
+                Column('level', css_class='form-group col-md-1 mb-0'),
+                Column('background', css_class='form-group col-md-3 mb-0'),
+                Column('scalaun', css_class='form-group col-md-3 mb-0'),
+                Column('diresaun', css_class='form-group col-md-3 mb-0'),
+               
                 css_class='form-row'
             ),
             Row(
+                
+                Column('departamentu', css_class='form-group col-md-4 mb-0'),
                 Column('endereco', css_class='form-group col-md-4 mb-0'),
                 Column('telefone', css_class='form-group col-md-4 mb-0'),
-                Column('email', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
             Row(

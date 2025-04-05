@@ -8,6 +8,22 @@ from users.decorators import allowed_users
 from django.conf import settings
 
 @login_required()
+def pdf_list(request):
+    pdfs = PDFUpload.objects.all().order_by('-uploaded_at')
+    return render(request, 'info/pdf_list.html', {'pdfs': pdfs})
+
+@login_required()   
+def upload_pdf(request):
+    if request.method == 'POST':
+        form = PDFUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('pdf_list')  # Ganti dengan nama URL untuk list kalau ada
+    else:
+        form = PDFUploadForm()
+    return render(request, 'info/upload_pdf.html', {'form': form})
+
+@login_required()
 @allowed_users(allowed_roles=['admin'])
 def funsionario_list(request):
 	group = request.user.groups.all()[0].name

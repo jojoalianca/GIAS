@@ -2,13 +2,17 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+	#informasaun baluns sobre gias
+	path('upload/', upload_pdf, name='upload_pdf'),
+	path('pdfs/lista/informasaun/lei nu 2/2025/ 22 de janeru', pdf_list, name='pdf_list'),
+
+    #lista funsionnariu
 	path('lista/Funsionariu', funsionario_list, name="lista-funsionariu"),
 	path('Adisiona/Finsionariu', funsionario_create, name='adisiona-funsionariu'),
 	path('funsionario/<int:pk>/update/', funsionario_update, name='funsionario_update'),
 	path('delete/<int:id>/Funsionariu/', delete_Funsionariu, name='delete_Funsionariu'),
-	
-	# path('phone-info-Public/<int:phone_info_id>/', phone_detail_viewPublic, name='phone_detail_viewPublic'),
 
+	# path('phone-info-Public/<int:phone_info_id>/', phone_detail_viewPublic, name='phone_detail_viewPublic'),
 	path('lista/arqiuvu', relatoriu_list, name="Lista-Arquivu"),
 	path('Adisiona/arqiuvu', Arquivu_create, name="Adisiona-Arquivu"),
 	path('Update/<str:pk>/arqiuvu', ArquivuRelatoriu_update, name="update-Arquivu"),

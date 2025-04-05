@@ -1,0 +1,28 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow rounded">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📄 Upload File PDF</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-flex justify-content-between mt-3">
+                            <button type="submit" class="btn btn-success">⬆️ Upload</button>
+                            <a href="{% url 'pdf_list' %}" class="btn btn-secondary">📂 View All Information</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

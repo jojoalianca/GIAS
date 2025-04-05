@@ -2,10 +2,11 @@
 {% load static %}
 {% block content %}
 
-<!-- Hero Section -->
-<div class="hero-section">
+<!-- Hero Banner with Government Style -->
+<section class="hero-banner py-5 bg-primary text-white">
     <div class="container">
         <div class="row align-items-center">
+<<<<<<< Updated upstream
             <div class="col-md-6 text-center">
                 <img src="{% static 'main/images/MS.png' %}" alt="Logo" class="img-fluid mb-3" style="max-width: 400px;">
                 <h4>BEMVINDU MAI...</h4>
@@ -14,73 +15,502 @@
             <div class="col-md-6 text-center">
                 <img src="{% static 'main/images/gias.png' %}" alt="Logo" class="img-fluid mb-3" style="max-width: 200px;">
                 <h1>SISTEMA ARQUIVAMENTU DADUS GABINETE INPESAUN I AUDITORIA DE SAÚDE (GIAS-MS)</h1>
+=======
+            <div class="col-md-6 order-md-2 text-center">
+                <div class="hero-logo-container p-4 bg-white rounded shadow">
+                    <img src="{% static 'main/images/MS.PNG' %}" alt="Ministry Logo" class="img-fluid" style="max-height: 180px;">
+                </div>
+            </div>
+            <div class="col-md-6 order-md-1 mt-4 mt-md-0">
+                <div class="hero-content">
+                    <h4 class="text-light mb-2">Bemvindu Mai ba</h4>
+                    <h1 class="display-4 fw-bold mb-3">MINISTÉRIU SAÚDE</h1>
+                    <p class="lead mb-4">Servisu Hamutuk ba Saúde Públiku Di'ak liu</p>
+                    <div class="badge bg-white text-primary p-2 mb-3">
+                        <img src="{% static 'main/images/gias.PNG' %}" alt="GIAS Logo" style="height: 40px;" class="me-2">
+                        <span>Sistema Integradu Jestaun Dadus Saúde Gabinete Inspesaun e Auditoria de Saude</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Main Content Area -->
+<div class="main-content py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Documents Section -->
+            <div class="col-lg-8 border-info p-3">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <i class="bi bi-file-earmark-pdf text-danger me-2"></i> 
+                            Dokumentus Ofisiál
+                        </h3>
+                        <a href="#" class="btn btn-sm btn-outline-primary">Ver Hotu <i class="bi bi-arrow-right ms-1"></i></a>
+                    </div>
+                    <div class="card-body ">
+                        {% if pdfs %}
+                            <div class="row g-3">
+                                {% for pdf in pdfs %}
+                                <div class="col-md-6">
+                                    <div class="document-card p-3 border rounded-3 h-100">
+                                        <div class="d-flex">
+                                            <div class="document-icon me-3 text-danger">
+                                                <i class="bi bi-file-earmark-pdf fs-2"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-1">{{ pdf.title }}</h5>
+                                                <p class="text-muted small mb-2">
+                                                    <i class="bi bi-clock-history me-1"></i> {{ pdf.uploaded_at|date:"d/M/Y" }}
+                                                </p>
+                                                <div class="d-flex">
+                                                    <a href="{{ pdf.file.url }}" class="btn btn-sm btn-outline-warning me-2" target="_blank">
+                                                        <i class="bi bi-eye me-1"></i> Ver
+                                                    </a>
+                                                    <a href="{{ pdf.file.url }}" download class="btn btn-sm btn-danger">
+                                                        <i class="bi bi-download me-1"></i> Download
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle me-2"></i> La iha dokumentu disponível iha momentu ne'e.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h3 class="mb-0">
+                            <i class="bi bi-bar-chart-line text-primary me-2"></i>
+                            Estatístika Funsionáriu
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <!-- Gender Distribution -->
+                            <div class="col-md-6">
+                                <div class="stat-card p-3 border rounded-3 h-100">
+                                    <h5 class="d-flex align-items-center">
+                                        <i class="bi bi-gender-ambiguous text-primary me-2"></i>
+                                        Total Funsionariu tuir Seksu
+                                    </h5>
+                                    <div class="chart-container mt-3" style="height: 250px;">
+                                        <canvas id="genderChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Department Distribution -->
+                            <div class="col-md-6">
+                                <div class="stat-card p-3 border rounded-3 h-100">
+                                    <h5 class="d-flex align-items-center">
+                                        <i class="bi bi-diagram-3 text-success me-2"></i>
+                                        Total Funsionariu Tuir  Departamentu
+                                    </h5>
+                                    <div class="department-list mt-3">
+                                        {% for xx in looping_funsionariu|slice:":5" %}
+                                        <div class="department-item mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span>{{ xx.departamento }}</span>
+                                                <span class="fw-bold">{{ xx.total_fun|default:"0" }}</span>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-success" role="progressbar" 
+                                                    aria-valuenow="{{ xx.total_fun }}" 
+                                                    aria-valuemin="0" 
+                                                    aria-valuemax="{{ max_departamentu }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Announcements -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h4 class="mb-0">
+                            <i class="bi bi-megaphone me-2"></i>
+                            Anúnsiu Ofisiál
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="announcement-list">
+                            <div class="announcement-item border-bottom pb-3 mb-3">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h6 class="fw-bold mb-0">Atualizasaun Sistema GIAS</h6>
+                                    <span class="badge bg-danger">Foun</span>
+                                </div>
+                                <p class="small text-muted mb-1">
+                                    <i class="bi bi-calendar me-1"></i> 15 Marsu 2025
+                                </p>
+                                <p class="mb-0">Sistema foun sei lansa iha loron 20 Marsu 2025. Favor prepara dadus sira.</p>
+                            </div>
+                            <div class="announcement-item border-bottom pb-3 mb-3">
+                                <h6 class="fw-bold mb-1">Treinamentu ba Empleadu</h6>
+                                <p class="small text-muted mb-1">
+                                    <i class="bi bi-calendar me-1"></i>  Junho 2025
+                                </p>
+                                <p class="mb-0">Treinamentu kona-ba sistema foun ba empleadu sira.</p>
+                            </div>
+                            <div class="announcement-item">
+                                <h6 class="fw-bold mb-1">Reuniaun Anual Saúde</h6>
+                                <p class="small text-muted mb-1">
+                                    <i class="bi bi-calendar me-1"></i> 10 Janeiru 2023
+                                </p>
+                                <p class="mb-0">Reuniaun anual ba avaliaun servisu saúde iha tinan 2022.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h4 class="mb-0">
+                            <i class="bi bi-link-45deg text-primary me-2"></i>
+                            Ligasaun Rápida
+                        </h4>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <i class="bi bi-file-text text-primary me-3 fs-5"></i>
+                                Relatóriu Anual Gias
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <i class="bi bi-journal-bookmark text-success me-3 fs-5"></i>
+                                Regulamentu Saúde
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <i class="bi bi-calendar-event text-info me-3 fs-5"></i>
+                                Kalendáriu Eventu
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <i class="bi bi-telephone text-warning me-3 fs-5"></i>
+                                Kontaktu Emerjénsia
+                            </a>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> Stashed changes
             </div>
         </div>
     </div>
 </div>
 
+<!-- Detailed Statistics Section -->
+<section class="detailed-stats py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Estatístika Detalhada</h2>
+            <p class="text-muted">Dados kompletu kona-ba funsionáriu Iha Gabinete Inspesaun e Auditoria de Saude</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Profession Stats -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-briefcase text-success me-2"></i>
+                            Total Funsionariu Gias tuir Profisaun
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="professionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Directorate Stats -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-building text-danger me-2"></i>
+                            Total Funsionariu Iha Diresaun GIAS
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="directorateChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Department Table -->
+        <div class="card border-0 shadow-sm mt-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-table text-primary me-2"></i>
+                    Rejistu Funsionáriu tuir Departamentu
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Departamentu</th>
+                                <th class="text-end">Mane</th>
+                                <th class="text-end">Feto</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for xx in looping_funsionariu %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ xx.departamento }}</td>
+                                <td class="text-end">{{ xx.total_sexo_Mane_Dep|default:"0" }}</td>
+                                <td class="text-end">{{ xx.total_sexu_Feto_Dep|default:"0" }}</td>
+                                <td class="text-end fw-bold">{{ xx.total_fun|default:"0" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <th colspan="2">Total Jeral</th>
+                                <th class="text-end">{{ total_sexu.1.count }}</th>
+                                <th class="text-end">{{ total_sexu.0.count }}</th>
+                                <th class="text-end"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Grafik dan Tabel -->
+<section class="container">
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5>Total Funsionariu per Departamentu</h5>
+                </div>
+                <div class="card-body">
+                    <div id="funsionariuChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <hr>
+<section class="detailed-stats py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Estatístika Detalhada</h2>
+            <p class="text-muted">Dados kompletu kona-ba Total Klinika Privado no Publiku Iha Timor-Leste </p>
+        </div>
 
-<!-- Statistics Section -->
-<div class="statistics-section">
-    <!-- Jumlah Berdasarkan Jenis Kelamin -->
-    <div class="category-header">Total Funsionariu Tuir Seksu no Status Profisaun</div>
-    <div class="row">
-        {% for item in total_sexu %}
-        <div class="col-md-3">
-            <div class="category-item">
-                <i class="fas fa-user"></i>
-                <div class="text">
-                    <div>{{ item.sexu }}</div>
-                    <div class="count">{{ item.count }}</div>
+        <div class="row g-4">
+            <!-- Profession Stats -->
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-briefcase text-success me-2"></i>
+                            Mapa klinika iha Teriroriu Timor Loro sa'e
+                        </h5>
+                    </div>
+                     <div class="card-body p-0"> <!-- Padding 0 untuk map agar full di dalam card -->
+                        <div id="map" style="height: 500px; border-radius: 0 0 8px 8px;"></div> <!-- Border radius hanya di bagian bawah -->
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-        {% for item in total_status_profisaun %}
-        <div class="col-md-3">
-            <div class="category-item">
-                <i class="fas fa-clipboard-list"></i>
-                <div class="text">
-                    <div>{{ item.status_profisaun }}</div>
-                    <div class="count">{{ item.count }}</div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+        </div> 
     </div>
+</section>
+ 
+<!-- Contact Section -->
+<section class="contact-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-5 mb-4 mb-md-0">
+                <h2 class="mb-4">Kontaktu ami</h2>
+                <div class="contact-info">
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-geo-alt fs-4 me-3"></i>
+                        <div>Ministériu Saúde, Rua de Caicoli, Dili, Timor-Leste</div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-telephone fs-4 me-3"></i>
+                        <div>+670 333 9999</div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-envelope fs-4 me-3"></i>
+                        <div>Gias2025@gmail.com</div>
+                    </div>
+                    <div class="d-flex">
+                        <i class="bi bi-clock fs-4 me-3"></i>
+                        <div>
+                            <div>Segunda - Sexta: 8:00 - 15:30</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Jumlah Berdasarkan Departamentu -->
-    <div class="category-header">Total Funsionariu Tuir Departamentu</div>
-    <div class="row">
-        {% for item in total_departamentu %}
-        <div class="col-md-3">
-            <div class="category-item">
-                <i class="fas fa-sitemap"></i>
-                <div class="text">
-                    <div>{{ item.departamentu__name }}</div>
-                    <div class="count">{{ item.count }}</div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gender Chart
+    const genderCtx = document.getElementById('genderChart').getContext('2d');
+    const genderChart = new Chart(genderCtx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                {% for item in total_sexu %}
+                    '{{ item.sexu }}',
+                {% endfor %}
+            ],
+            datasets: [{
+                data: [
+                    {% for item in total_sexu %}
+                        {{ item.count }},
+                    {% endfor %}
+                ],
+                backgroundColor: [
+                    '#4e73df',
+                    '#1cc88a',
+                    '#36b9cc'
+                ],
+                hoverBackgroundColor: [
+                    '#2e59d9',
+                    '#17a673',
+                    '#2c9faf'
+                ],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            },
+            cutout: '70%'
+        }
+    });
 
-    <!-- Jumlah Berdasarkan Diresaun -->
-    <div class="category-header">Total Funsionariu Tuir Diresaun</div>
-    <div class="row">
-        {% for item in total_diresaun %}
-        <div class="col-md-3">
-            <div class="category-item">
-                <i class="fas fa-building"></i>
-                <div class="text">
-                    <div>{{ item.diresaun__name }}</div>
-                    <div class="count">{{ item.count }}</div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
+    // Profession Chart
+    const professionCtx = document.getElementById('professionChart').getContext('2d');
+    const professionChart = new Chart(professionCtx, {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for item in total_status_profisaun %}
+                    '{{ item.status_profisaun }}',
+                {% endfor %}
+            ],
+            datasets: [{
+                label: 'Total',
+                data: [
+                    {% for item in total_status_profisaun %}
+                        {{ item.count }},
+                    {% endfor %}
+                ],
+                backgroundColor: '#1cc88a',
+                hoverBackgroundColor: '#17a673',
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Directorate Chart
+    const directorateCtx = document.getElementById('directorateChart').getContext('2d');
+    const directorateChart = new Chart(directorateCtx, {
+        type: 'pie',
+        data: {
+            labels: [
+                {% for item in total_diresaun %}
+                    '{{ item.diresaun__name }}',
+                {% endfor %}
+            ],
+            datasets: [{
+                data: [
+                    {% for item in total_diresaun %}
+                        {{ item.count }},
+                    {% endfor %}
+                ],
+                backgroundColor: [
+                    '#4e73df',
+                    '#1cc88a',
+                    '#36b9cc',
+                    '#f6c23e',
+                    '#e74a3b'
+                ],
+                hoverBackgroundColor: [
+                    '#2e59d9',
+                    '#17a673',
+                    '#2c9faf',
+                    '#dda20a',
+                    '#be2617'
+                ],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'Charts/chart.js/chart.min.js' %}"></script>
+<script type="text/javascript">{% include 'js/grafic.js' %}</script>
+
+<!-- Leaflet.js -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<!-- Custom JavaScript -->
+<script type="text/javascript">{% include 'js/generalmaps.js' %}</script>
 
 {% endblock %}

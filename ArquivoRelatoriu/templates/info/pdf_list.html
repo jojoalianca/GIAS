@@ -1,0 +1,36 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">📂 Lista Informasaun (PDF)</h2>
+        <a href="{% url 'upload_pdf' %}" class="btn btn-primary">⬆️ Upload new information PDF</a>
+    </div>
+
+    {% if pdfs %}
+        <div class="row">
+            {% for pdf in pdfs %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pdf.title }}</h5>
+                            <p class="card-text text-muted">
+                                Diupload pada {{ pdf.uploaded_at|date:"d M Y, H:i" }}
+                            </p>
+                            <a href="{{ pdf.file.url }}" target="_blank" class="btn btn-outline-success w-100">
+                                📥 Download PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Belum ada file PDF yang diupload.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
