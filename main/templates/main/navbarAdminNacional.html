@@ -1,11 +1,16 @@
 <div class="collapse navbar-collapse" id="navbarsExampleDefault">
 	<ul class="navbar-nav ml-auto">
 		<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">HOME <i class="fa fa-home"></i></a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'MapaKlinika_list' %}">LISTA KLINIKA <i class="fa fa-map"></i></a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'lista-funsionariu' %}">LISTA FUNSIONARIU <i class="fa fa-users"></i></a></li>
-		<li class="nav-item"><a class="nav-link" href="{% url 'Lista-Arquivu'%}"><i class="fa fa-pencil"></i> LISTA RELATORIU SCANE  </a></li>
 		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">kARTA  </a>
+			<a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">LISTA  </a>
+			<div class="dropdown-menu" aria-labelledby="profile">
+				<a class="dropdown-item" href="{% url 'MapaKlinika_list' %}" ><i class="fa fa-list"></i> LISTA KLINIKA </a>
+				<a class="dropdown-item" href="{% url 'lista-funsionariu' %}" ><i class="fa fa-bar-chart"></i> LISTA FUNSIONARIU </a>				
+				<a class="dropdown-item" href="{% url 'Lista-Arquivu'%}" ><i class="fa fa-bar-chart"></i> LISTA RELATORIU SCANE</a>					
+			</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">KARTA  </a>
 			<div class="dropdown-menu" aria-labelledby="profile">
 				<a class="dropdown-item" href="{% url 'kartaEntrasa_list' %}" ><i class="fa fa-list"></i> ENTRADA </a>
 				<a class="dropdown-item" href="" ><i class="fa fa-bar-chart"></i> SAIDA </a>				

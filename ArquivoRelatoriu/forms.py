@@ -189,3 +189,63 @@ class ClienteRaiPointForm(forms.ModelForm):
             HTML(""" <div class="text-left mt-4"> <button class="btn btn-sm btn-labeled btn-info" type="submit" title="Save"><span class="btn-label"><i class='fa fa-save'></i></span> Save</button>"""),
             HTML("""  <button class="btn btn-sm btn-labeled btn-secondary" onclick=self.history.back()><span class="btn-label"><i class="fa fa-window-close"></i></span> Cancel</button></div>""")
         )
+class MapaKlinikForm(forms.ModelForm):
+    data_registu = forms.DateField(label='data_registu', widget=DateInput())
+    class Meta:
+        model = MapaKlinik
+        fields = '__all__'
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['municipality'].queryset = Municipality.objects.all()
+        self.fields['administrativepost'].queryset = AdministrativePost.objects.none()
+        self.fields['village'].queryset = Village.objects.none()
+        self.fields['aldeia'].queryset = Aldeia.objects.none()
+        if 'municipality' in self.data:
+            try:
+                municipality = int(self.data.get('municipality'))
+                self.fields['administrativepost'].queryset = AdministrativePost.objects.filter(municipality__id=municipality).order_by('name')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['administrativepost'].queryset = self.instance.municipality.administrativepost_set.order_by('name')
+
+        if 'administrativepost' in self.data:
+            try:
+                administrativepost = int(self.data.get('administrativepost'))
+                self.fields['village'].queryset = Village.objects.filter(administrativepost__id=administrativepost).order_by('name')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['village'].queryset = self.instance.administrativepost.village_set.order_by('name')
+
+        if 'village' in self.data:
+            try:
+                village = int(self.data.get('village'))
+                self.fields['aldeia'].queryset = Aldeia.objects.filter(village__id=village).order_by('name')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['aldeia'].queryset = self.instance.village.aldeia_set.order_by('name')
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Row(
+                
+                Column('naran_klinik', css_class='form-group col-md-4 mb-0'),
+                Column('tipo_klinik', css_class='form-group col-md-4 mb-0'),
+                Column('telefone', css_class='form-group col-md-4 mb-0'),
+                Column('email', css_class='form-group col-md-4 mb-0'),
+                Column('responsavel', css_class='form-group col-md-4 mb-0'),
+                Column('municipality', css_class='form-group col-md-4 mb-0'),
+                Column('administrativepost', css_class='form-group col-md-4 mb-0'),
+                Column('village', css_class='form-group col-md-4 mb-0'),
+                Column('aldeia', css_class='form-group col-md-4 mb-0'),
+                Column('data_registu', css_class='form-group col-md-4 mb-0'),
+                
+            ),
+            
+            HTML(""" <div class="text-left mt-4"> <button class="btn btn-sm btn-labeled btn-info" type="submit" title="Save"><span class="btn-label"><i class='fa fa-save'></i></span> Save</button>"""),
+            HTML("""  <button class="btn btn-sm btn-labeled btn-secondary" onclick=self.history.back()><span class="btn-label"><i class="fa fa-window-close"></i></span> Cancel</button></div>""")
+        )

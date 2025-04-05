@@ -338,3 +338,15 @@ def update_cliente_raipoint(request, point_id):
         'klinika': cordinate.klinika,  # Tambahkan klinika ke konteks jika diperlukan di template
     }
     return render(request, 'mapa/mapaklinik_detail.html', context)
+
+
+@login_required()
+def add_klinik(request):
+    if request.method == 'POST':
+        form = MapaKlinikForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('MapaKlinika_list')  # Ganti dengan URL tujuan setelah submit
+    else:
+        form = MapaKlinikForm()
+    return render(request, 'mapa/klinika.html', {'form': form,'page':'form'})
